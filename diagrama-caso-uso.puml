@@ -1,43 +1,46 @@
 @startuml
-title Diagrama de Caso de Uso – Sistema IMC Completo
+skinparam componentStyle rectangle
+skinparam shadowing true
+skinparam defaultTextAlignment center
+
+title Arquitectura del Portal IMC
 
 actor Cliente
 actor Especialista
-actor Interactura
-actor SistemaIMC as "Sistema IMC"
+actor Administrador
 
-package "client_app (Frontend + Backend)" {
-  Cliente --> (Registrarse)
-  Cliente --> (Iniciar sesión)
-  Cliente --> (Calcular IMC)
-  Cliente --> (Ver resultado de IMC)
+package "Frontend Web" {
+  [client_app] as ClientApp
+  [specialist_app] as SpecialistApp
+  [admin_app] as AdminApp
 }
 
-package "specialist_app (Frontend + Backend)" {
-  Especialista --> (Iniciar sesión)
-  Especialista --> (Ver pacientes asignados)
-  Especialista --> (Ver historial de IMC)
-}
+database "PostgreSQL\n(imc_db)" as DB
 
-package "interactura_app (Backend)" {
-  Interactura --> (Consultar estadísticas globales)
-  Interactura --> (Ver distribución de pacientes por especialista)
-  Interactura --> (Exportar datos agregados)
-}
+Cliente --> ClientApp : Accede vía navegador\n(registro, login, IMC)
+Especialista --> SpecialistApp : Accede vía navegador\n(registro, login, historial)
+Administrador --> AdminApp : Accede vía navegador\n(login, SQL)
 
-package "shared_backend (API + Modelos)" {
-  SistemaIMC --> (Asignar cliente a especialista)
-  SistemaIMC --> (Guardar cálculo de IMC)
-  SistemaIMC --> (Validar credenciales)
-  SistemaIMC --> (Proteger rutas con autenticación)
-  SistemaIMC --> (Acceder a base de datos PostgreSQL)
-}
+ClientApp --> DB : ORM SQLAlchemy\n(UsuarioCliente, IMCHistorial)
+SpecialistApp --> DB : ORM SQLAlchemy\n(UsuarioEspecialista, IMCHistorial)
+AdminApp --> DB : Conexión directa\n(psycopg2 para SQL libre)
 
-(Registrarse) .down.> (Asignar cliente a especialista) : <<incluye>>
-(Calcular IMC) .down.> (Guardar cálculo de IMC) : <<incluye>>
-(Iniciar sesión) .down.> (Validar credenciales) : <<incluye>>
-(Ver pacientes asignados) .down.> (Proteger rutas con autenticación) : <<incluye>>
-(Consultar estadísticas globales) .down.> (Proteger rutas con autenticación) : <<incluye>>
-(Guardar cálculo de IMC) .down.> (Acceder a base de datos PostgreSQL) : <<usa>>
-(Asignar cliente a especialista) .down.> (Acceder a base de datos PostgreSQL) : <<usa>>
+note right of ClientApp
+- Calcula IMC
+- Guarda historial
+- Protege con JWT
+- Usa sesiones web
+end note
+
+note right of SpecialistApp
+- Consulta historial por nombre
+- Protege con JWT
+- Usa sesiones web
+end note
+
+note right of AdminApp
+- Ejecuta consultas SELECT
+- Muestra resultados en tabla
+- Bloquea comandos peligrosos
+end note
 @enduml
