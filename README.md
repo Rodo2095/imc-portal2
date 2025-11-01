@@ -2,7 +2,7 @@
 Nombre del Proyecto: Cálculo Web de IMC
 Portal IMC y Gestión de Especialistas
 
-Este proyecto es una aplicación web modular que permite a los usuarios calcular su Índice de Masa Corporal (IMC) y a los especialistas ver los datos de sus pacientes asignados automáticamente. Está dividido en dos portales independientes, completamente dockerizados y conectados a una base de datos PostgreSQL.
+Este proyecto es una aplicación web modular que permite a los usuarios calcular su Índice de Masa Corporal (IMC) y a los especialistas ver los datos de sus pacientes asignados automáticamente, adicional hay un portal de administradores que permite el acceso para realizar consultas en SQL. Está dividido en 3 portales independientes, completamente dockerizados y conectados a una base de datos PostgreSQL.
 
 ---
 
@@ -39,4 +39,5 @@ Tecnologías utilizadas
    ```bash
    git clone https://github.com/tu-usuario/imc-portal2.git
    cd imc-portal2
+
 
