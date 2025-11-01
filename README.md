@@ -11,6 +11,7 @@ Objetivo
 Desarrollar un sistema web dividido en dos módulos:
 - **Portal de Clientes**: registro, login, cálculo de IMC y almacenamiento de historial.
 - **Portal de Especialistas**: login y visualización de pacientes asignados en orden rotativo.
+- **Portal de Administradores**: login y realiza consulta en SQL a la base de datos.
 
 ---
 
@@ -38,3 +39,4 @@ Tecnologías utilizadas
    ```bash
    git clone https://github.com/tu-usuario/imc-portal2.git
    cd imc-portal2
+
