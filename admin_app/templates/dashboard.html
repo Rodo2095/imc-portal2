@@ -1,0 +1,29 @@
+<h2>Panel de Consultas SQL</h2>
+<form method="POST">
+  <textarea name="query" rows="5" cols="80" placeholder="Escribe tu consulta SELECT aquí..."></textarea><br>
+  <button type="submit">Ejecutar</button>
+</form>
+
+{% if error %}
+  <p style="color:red">{{ error }}</p>
+{% endif %}
+
+{% if columnas %}
+  <h3>Resultados:</h3>
+  <table border="1">
+    <tr>
+      {% for col in columnas %}
+        <th>{{ col }}</th>
+      {% endfor %}
+    </tr>
+    {% for fila in resultado %}
+      <tr>
+        {% for celda in fila %}
+          <td>{{ celda }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+<a href="/logout">Cerrar sesión</a>

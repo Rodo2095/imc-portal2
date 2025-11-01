@@ -1,0 +1,6 @@
+flask
+flask_sqlalchemy
+flask_migrate
+flask_jwt_extended
+flasgger
+psycopg2-binary

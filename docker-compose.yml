@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  client_app:
+    build: ./client_app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./shared:/app/shared
+    depends_on:
+      - db
+    networks:
+      - imc_net
+
+  specialist_app:
+    build: ./specialist_app
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./shared:/app/shared
+    depends_on:
+      - db
+    networks:
+      - imc_net
+
+  admin_app:
+    build: ./admin_app
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./shared:/app/shared
+    depends_on:
+      - db
+    networks:
+      - imc_net
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: imc_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - imc_net
+
+volumes:
+  pgdata:
+
+networks:
+  imc_net:

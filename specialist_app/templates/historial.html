@@ -1,0 +1,20 @@
+<h2>Consultar Historial de Paciente</h2>
+<form method="POST">
+  Nombre del paciente: <input type="text" name="nombre"><br>
+  <button type="submit">Buscar</button>
+</form>
+
+{% if error %}
+  <p style="color:red">{{ error }}</p>
+{% endif %}
+
+{% if historial %}
+  <h3>Historial de {{ nombre }}</h3>
+  <ul>
+    {% for h in historial %}
+      <li>{{ h.fecha }} - IMC: {{ h.imc }} ({{ h.clasificacion }})</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<a href="/dashboard">Volver al inicio</a>

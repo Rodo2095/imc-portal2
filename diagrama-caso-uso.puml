@@ -1,0 +1,43 @@
+@startuml
+title Diagrama de Caso de Uso – Sistema IMC Completo
+
+actor Cliente
+actor Especialista
+actor Interactura
+actor SistemaIMC as "Sistema IMC"
+
+package "client_app (Frontend + Backend)" {
+  Cliente --> (Registrarse)
+  Cliente --> (Iniciar sesión)
+  Cliente --> (Calcular IMC)
+  Cliente --> (Ver resultado de IMC)
+}
+
+package "specialist_app (Frontend + Backend)" {
+  Especialista --> (Iniciar sesión)
+  Especialista --> (Ver pacientes asignados)
+  Especialista --> (Ver historial de IMC)
+}
+
+package "interactura_app (Backend)" {
+  Interactura --> (Consultar estadísticas globales)
+  Interactura --> (Ver distribución de pacientes por especialista)
+  Interactura --> (Exportar datos agregados)
+}
+
+package "shared_backend (API + Modelos)" {
+  SistemaIMC --> (Asignar cliente a especialista)
+  SistemaIMC --> (Guardar cálculo de IMC)
+  SistemaIMC --> (Validar credenciales)
+  SistemaIMC --> (Proteger rutas con autenticación)
+  SistemaIMC --> (Acceder a base de datos PostgreSQL)
+}
+
+(Registrarse) .down.> (Asignar cliente a especialista) : <<incluye>>
+(Calcular IMC) .down.> (Guardar cálculo de IMC) : <<incluye>>
+(Iniciar sesión) .down.> (Validar credenciales) : <<incluye>>
+(Ver pacientes asignados) .down.> (Proteger rutas con autenticación) : <<incluye>>
+(Consultar estadísticas globales) .down.> (Proteger rutas con autenticación) : <<incluye>>
+(Guardar cálculo de IMC) .down.> (Acceder a base de datos PostgreSQL) : <<usa>>
+(Asignar cliente a especialista) .down.> (Acceder a base de datos PostgreSQL) : <<usa>>
+@enduml

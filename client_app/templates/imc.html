@@ -1,0 +1,13 @@
+<h2>Calcular IMC</h2>
+<form method="POST">
+  Peso (kg): <input type="number" step="0.1" name="peso"><br>
+  Altura (m): <input type="number" step="0.01" name="altura"><br>
+  <button type="submit">Calcular</button>
+</form>
+
+{% if imc %}
+  <h3>Resultado:</h3>
+  <p>IMC: {{ imc }}</p>
+  <p>Clasificación: {{ clasificacion }}</p>
+{% endif %}
+<a href="/dashboard">Volver al inicio</a>
