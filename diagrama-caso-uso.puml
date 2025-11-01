@@ -1,7 +1,13 @@
 @startuml
+left to right direction
+
 skinparam componentStyle rectangle
 skinparam shadowing true
 skinparam defaultTextAlignment center
+skinparam padding 20
+skinparam nodeMargin 30
+skinparam ranksep 50
+skinparam nodesep 50
 
 title Arquitectura del Portal IMC
 
@@ -9,9 +15,19 @@ actor Cliente
 actor Especialista
 actor Administrador
 
-package "Frontend Web" {
+Cliente -[#white]> Cliente
+Especialista -[#white]> Especialista
+Administrador -[#white]> Administrador
+
+package "Cliente Web" {
   [client_app] as ClientApp
+}
+
+package "Especialista Web" {
   [specialist_app] as SpecialistApp
+}
+
+package "Admin Web" {
   [admin_app] as AdminApp
 }
 
@@ -26,21 +42,21 @@ SpecialistApp --> DB : ORM SQLAlchemy\n(UsuarioEspecialista, IMCHistorial)
 AdminApp --> DB : Conexión directa\n(psycopg2 para SQL libre)
 
 note right of ClientApp
-- Calcula IMC
-- Guarda historial
-- Protege con JWT
+- Calcula IMC  
+- Guarda historial  
+- Protege con JWT  
 - Usa sesiones web
 end note
 
 note right of SpecialistApp
-- Consulta historial por nombre
-- Protege con JWT
+- Consulta historial por nombre  
+- Protege con JWT  
 - Usa sesiones web
 end note
 
 note right of AdminApp
-- Ejecuta consultas SELECT
-- Muestra resultados en tabla
+- Ejecuta consultas SELECT  
+- Muestra resultados en tabla  
 - Bloquea comandos peligrosos
 end note
 @enduml
